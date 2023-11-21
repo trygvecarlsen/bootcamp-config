@@ -1,11 +1,10 @@
 ---
 name: deploy-extpipes-cli
-
+# GAAAAAH!!!! HVA FAEN ER DETTE!?
 on:
     push:
         branches:
-            #- main
-            - none
+            - main
         paths:
             - config/extpipes/**
             - .github/workflows/deploy-extpipes-cli.yaml
@@ -19,19 +18,13 @@ jobs:
                 environment: [test, prod]
                 include:
                     - environment: test
-                      # CDF cluster, like bluefield, greenfield or westeurope-1
-                      CDF_CLUSTER: [CDF cluster]
-                      # CDF Project name
-                      CDF_PROJECT: [CDF project]
-                      # Azure AD tenant id
-                      IDP_TENANT: [AAD tenant id]
+                      CDF_CLUSTER: westeurope-1
+                      CDF_PROJECT: cdf-bootcamp-09-test
+                      IDP_TENANT: 16e3985b-ebe8-4e24-9da4-933e21a9fc81
                     - environment: prod
-                      # CDF cluster, like bluefield, greenfield or westeurope-1
-                      CDF_CLUSTER: [CDF cluster]
-                      # CDF Project name
-                      CDF_PROJECT: [CDF project]
-                      # Azure AD tenant id
-                      IDP_TENANT: [AAD tenant id]
+                      CDF_CLUSTER: westeurope-1
+                      CDF_PROJECT: cdf-bootcamp-09-prod
+                      IDP_TENANT: 16e3985b-ebe8-4e24-9da4-933e21a9fc81
 
         environment: ${{ matrix.environment}}
         env:
@@ -39,7 +32,7 @@ jobs:
 
         steps:
             - uses: actions/checkout@v3
-            - uses: cognitedata/inso-extpipes-cli@v2.2.1
+            - uses: cognitedata/inso-extpipes-cli@main
               env:
                   EXTPIPES_IDP_CLIENT_ID: ${{ secrets.CLIENT_ID }}
                   EXTPIPES_IDP_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
@@ -49,7 +42,4 @@ jobs:
                   EXTPIPES_IDP_SCOPES: ${{ env.CDF_HOST }}.default
 
               with:
-                  # Path to extpipes cli configuration file
                   config_file: ./config/extpipes/extpipes-cli-config.yml
-            # "yes"|"no" deploy with special groups and aad_mappings
-            #with_special_groups: "yes"
