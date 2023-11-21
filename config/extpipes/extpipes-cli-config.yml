@@ -1,5 +1,6 @@
 ---
-cognite: # kwargs to pass to the CogniteClient, Environment variable format: ${ENVIRONMENT_VARIABLE}
+# GAAAAAH!!!! HVA FAEN ER DETTE!?
+cognite:
     host: ${EXTPIPES_CDF_HOST}
     project: ${EXTPIPES_CDF_PROJECT}
 
@@ -19,7 +20,6 @@ logger:
 
 extpipe-pattern: '{source}:{short-name}:{rawtable-name}:{suffix}'
 
-# can contain multiple contacts, can be overwritten on pipeline level
 default-contacts:
     - name: Support
       email: trygve.carlsen@akersolutions.com
@@ -27,7 +27,6 @@ default-contacts:
       send-notification: false
 
 rawdbs:
-  # list of raw-dbs > containing rawtables > containing pipelines
     - rawdb-name: src:001:sap:db
       dataset-external-id: src:001:sap:ds
       short-name: sap
