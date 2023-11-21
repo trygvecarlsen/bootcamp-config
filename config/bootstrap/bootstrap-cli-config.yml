@@ -1,6 +1,6 @@
 ---
 bootstrap:
-
+# HVA FAEN ER DETTE!?
     features:
         with-datamodel-capability: false
         with-raw-capability: true
