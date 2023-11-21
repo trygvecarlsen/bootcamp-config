@@ -1,6 +1,6 @@
 ---
 name: deploy-extpipes-cli
-# GAAAAAH!!!! HVA FAEN ER DETTE!?
+# GAAAAAH!!!! NEEEEI!!! HVA FAEN ER DETTE!? >:*(
 on:
     push:
         branches:
