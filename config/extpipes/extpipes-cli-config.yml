@@ -1,9 +1,12 @@
 ---
-# GAAAAAH!!!! NEEEEI!!! HVA FAEN ER DETTE!? >:*( 456789
-cognite:
+# follows the same parameter structure as the DB extractor configuration
+cognite: # kwargs to pass to the CogniteClient, Environment variable format: ${ENVIRONMENT_VARIABLE}
+  # host: https://${EXTPIPES_CDF_CLUSTER}.cognitedata.com/
     host: ${EXTPIPES_CDF_HOST}
     project: ${EXTPIPES_CDF_PROJECT}
-
+  #
+  # AAD IdP login credentials:
+  #
     idp-authentication:
         client-id: ${EXTPIPES_IDP_CLIENT_ID}
         secret: ${EXTPIPES_IDP_CLIENT_SECRET}
@@ -13,26 +16,32 @@ cognite:
 
 logger:
     file:
-        path: ./logs/test-deploy.log
+        path: ./logs/extpipes-deploy.log
         level: INFO
     console:
         level: INFO
 
+# extpipe-pattern only documentation atm
 extpipe-pattern: '{source}:{short-name}:{rawtable-name}:{suffix}'
 
+# can contain multiple contacts, can be overwritten on pipeline level
 default-contacts:
     - name: Support
       email: trygve.carlsen@akersolutions.com
-      role: admin
+      role: administrator
       send-notification: false
 
 rawdbs:
+  # list of raw-dbs > containing rawtables > containing pipelines
     - rawdb-name: src:001:sap:db
       dataset-external-id: src:001:sap:ds
       short-name: sap
       rawtables:
           - rawtable-name: assets
             pipelines:
+        # source is a short-name identifying the pipeline source being
+        # a 'db-extractor (db)', an 'Azure Function (az-func)',
+        # or 'Azure Data Factory (adf)', 'Python script (py)', ..
                 - source: csv
                   schedule: On trigger
                   contacts:
@@ -41,12 +50,15 @@ rawdbs:
                         role: data engineer
                         send-notification: false
     - rawdb-name: src:002:opcua:db
-      short-name: opcua
       dataset-external-id: src:002:opcua:ds
+      short-name: opcua
       rawtables:
           - rawtable-name: datapoints
             pipelines:
-                - source: ice-cream-api
+        # source is a short-name identifying the pipeline source being
+        # a 'db-extractor (db)', an 'Azure Function (az-func)',
+        # or 'Azure Data Factory (adf)', 'Python script (py)', ..
+                - source: csv
                   schedule: On trigger
                   contacts:
                       - name: Support
