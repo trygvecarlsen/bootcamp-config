@@ -58,7 +58,7 @@ rawdbs:
         # source is a short-name identifying the pipeline source being
         # a 'db-extractor (db)', an 'Azure Function (az-func)',
         # or 'Azure Data Factory (adf)', 'Python script (py)', ..
-                - source: csv
+                - source: ice-cream-api
                   schedule: On trigger
                   contacts:
                       - name: Support
